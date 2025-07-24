@@ -61,8 +61,3 @@ XmlParserService
     creates all Listing's available in data file (FAILED - 7)
     converts CET time zone to UTC (FAILED - 8)
 ```
-
-##### You have 2 hours to complete as many tasks as possible.
-We'll evaluate both the code you produce as well as the completeness of the specs. Do not worry if you cannot complete all assignments in time. Do your best to complete as much as possible, but when don't sweat it if you cannot complete the full assignment. Even some of our experienced engineers in Simply.TV has spend more han 2 hours to complete the full test.
-
-Once you have completed your assignments, please zip the directory of this Rails application again, and return the zip file to Simply.TV for a review. Please ensure to include your changes.
