@@ -1,24 +1,13 @@
-class JsonParserService
-  attr_reader :data
-
+class JsonParserService < BaseParserService
   # Service initiates with the file content of spec/fixtures/data.json
-  def initialize(data)
-    @data = data
-  end
 
-  def parse
-    json_data = JSON.parse(data)
-    
-    json_data.each do |item|
-      title = item['title']
-      episode_number = nil
+  private
+
+  def extract_listings
+    JSON.parse(data).map do |item|
+      title, episode_number = extract_title_and_episode(item['title'])
       
-      if title.match(/\((\d+)\)$/)
-        episode_number = $1.to_i
-        title = title.gsub(/\s*\(\d+\)$/, '')
-      end
-      
-      Listing.create!(
+      ListingData.new(
         title: title,
         start_time: item.dig('schedule', 'start'),
         end_time: item.dig('schedule', 'stop'),
@@ -27,6 +16,16 @@ class JsonParserService
         episode_number: episode_number,
         season_number: item['season']
       )
+    end
+  end
+
+  def extract_title_and_episode(title)
+    if title.match(/\((\d+)\)$/)
+      episode_number = $1.to_i
+      clean_title = title.gsub(/\s*\(\d+\)$/, '')
+      [clean_title, episode_number]
+    else
+      [title, nil]
     end
   end
 end
